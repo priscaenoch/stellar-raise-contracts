@@ -8,9 +8,9 @@ use soroban_sdk::{
 };
 
 #[cfg(test)]
-mod test;
-#[cfg(test)]
 mod auth_tests;
+#[cfg(test)]
+mod test;
 
 const CONTRACT_VERSION: u32 = 3;
 #[allow(dead_code)]
