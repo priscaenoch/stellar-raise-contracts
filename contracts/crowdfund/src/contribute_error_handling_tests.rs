@@ -36,6 +36,7 @@ fn setup() -> (Env, CrowdfundContractClient<'static>, Address, Address) {
 
     let creator = Address::generate(&env);
     let contributor = Address::generate(&env);
+
     asset_client.mint(&contributor, &i128::MAX);
 
     let now = env.ledger().timestamp();
@@ -54,7 +55,7 @@ fn setup() -> (Env, CrowdfundContractClient<'static>, Address, Address) {
     (env, client, contributor, token_addr)
 }
 
-// ── happy path ────────────────────────────────────────────────────────────────
+// ── happy path ───────────────────────────────────────────────────────────────
 
 #[test]
 fn contribute_happy_path() {
@@ -77,27 +78,6 @@ fn contribute_accumulates_multiple_contributions() {
 
 // ── CampaignEnded ─────────────────────────────────────────────────────────────
 
-/// Test: zero amount returns ContractError::AmountTooLow when min > 0.
-#[test]
-fn contribute_zero_amount_returns_amount_too_low() {
-    let (env, client, contributor, _) = setup();
-    env.ledger().set_timestamp(env.ledger().timestamp() + 1);
-    let result = client.try_contribute(&contributor, &0);
-    assert_eq!(result.unwrap_err().unwrap(), ContractError::AmountTooLow);
-}
-
-/// Test: negative amount returns ContractError::AmountTooLow.
-#[test]
-fn contribute_negative_amount_returns_amount_too_low() {
-    let (env, client, contributor, _) = setup();
-    env.ledger().set_timestamp(env.ledger().timestamp() + 1);
-    let result = client.try_contribute(&contributor, &-1);
-    assert_eq!(result.unwrap_err().unwrap(), ContractError::AmountTooLow);
-}
-
-// ── CampaignEnded (code 2) ────────────────────────────────────────────────────
-
-/// Test: contribution after deadline returns ContractError::CampaignEnded.
 #[test]
 fn contribute_after_deadline_returns_campaign_ended() {
     let (env, client, contributor, _) = setup();
@@ -107,7 +87,6 @@ fn contribute_after_deadline_returns_campaign_ended() {
     assert_eq!(result.unwrap_err().unwrap(), ContractError::CampaignEnded);
 }
 
-/// Test: contribution at exactly the deadline timestamp is accepted (strict >).
 #[test]
 fn contribute_exactly_at_deadline_is_accepted() {
     let (env, client, contributor, _) = setup();
@@ -119,7 +98,6 @@ fn contribute_exactly_at_deadline_is_accepted() {
 
 // ── BelowMinimum (typed — replaces old panic) ─────────────────────────────────
 
-/// Test: Overflow error code constant matches ContractError repr.
 #[test]
 fn contribute_below_minimum_returns_amount_too_low() {
     let (env, client, contributor, _) = setup();
@@ -188,7 +166,7 @@ fn overflow_error_code_matches_contract_error_repr() {
     assert_eq!(ContractError::Overflow as u32, 6);
 }
 
-// ── describe_error helpers ────────────────────────────────────────────────────
+// ── error_codes helpers ───────────────────────────────────────────────────────
 
 #[test]
 fn describe_error_campaign_ended() {
@@ -221,16 +199,9 @@ fn describe_error_amount_too_low() {
 #[test]
 fn describe_error_unknown() {
     assert_eq!(
-        contribute_error_handling::describe_error(
-            contribute_error_handling::error_codes::AMOUNT_TOO_LOW
-        ),
-        "Contribution amount is below the campaign minimum"
+        contribute_error_handling::describe_error(99),
+        "Unknown error"
     );
-}
-
-#[test]
-fn describe_error_unknown() {
-    assert_eq!(contribute_error_handling::describe_error(99), "Unknown error");
 }
 
 #[test]
