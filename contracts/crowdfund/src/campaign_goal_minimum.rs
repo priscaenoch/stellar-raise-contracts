@@ -171,8 +171,22 @@ pub fn validate_goal_amount(
 
 /// Validates that `min_contribution` meets the minimum floor.
 ///
-/// @param  min_contribution  The proposed minimum contribution in token units.
-/// @return                   `Ok(())` if valid, `Err` otherwise.
+/// ## Integer-overflow safety
+///
+/// The comparison `goal_amount < MIN_GOAL_AMOUNT` is a single signed integer
+/// comparison — no arithmetic is performed, so overflow is impossible.
+#[inline]
+pub fn validate_goal_amount(
+    _env: &soroban_sdk::Env,
+    goal_amount: i128,
+) -> Result<(), crate::ContractError> {
+    if goal_amount < MIN_GOAL_AMOUNT {
+        return Err(crate::ContractError::GoalTooLow);
+    }
+    Ok(())
+}
+
+/// Validates that `min_contribution` meets the minimum floor.
 #[inline]
 pub fn validate_min_contribution(min_contribution: i128) -> Result<(), &'static str> {
     if min_contribution < MIN_CONTRIBUTION_AMOUNT {
