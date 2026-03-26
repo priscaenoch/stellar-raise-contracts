@@ -214,11 +214,15 @@ pub enum ContractError {
     /// Returned by `initialize` when `goal < MIN_GOAL_AMOUNT`.
     GoalTooLow = 13,
 
+    /// Returned by `validate_goal_amount` when `goal_amount < MIN_GOAL_AMOUNT`.
+    GoalTooLow = 18,
+
     /// Returned by `contribute` when `amount` is zero.
     ZeroAmount = 13,
     BelowMinimum = 14,
     CampaignNotActive = 15,
     /// Returned by `contribute` when `amount` is negative.
+    NegativeAmount = 16,
     NegativeAmount = 11,
 }
 
