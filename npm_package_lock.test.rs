@@ -3,12 +3,12 @@
 /// Comprehensive test suite for the `npm_package_lock` contract module.
 ///
 /// ## Coverage targets
-/// - `parse_semver`            — valid, edge-case, and invalid inputs
-/// - `is_version_gte`          — boundary comparisons
-/// - `validate_integrity`      — sha512 presence and format
-/// - `audit_package`           — pass/fail scenarios per advisory
-/// - `audit_all`               — batch audit correctness
-/// - `failing_results`         — filter helper
+/// - `parse_semver`              — valid, edge-case, and invalid inputs
+/// - `is_version_gte`            — boundary comparisons
+/// - `validate_integrity`        — sha512 presence and format
+/// - `audit_package`             — pass/fail scenarios per advisory
+/// - `audit_all`                 — batch audit correctness
+/// - `failing_results`           — filter helper
 /// - `validate_lockfile_version` — supported/unsupported versions
 ///
 /// ## Security notes
@@ -16,12 +16,17 @@
 /// - Boundary tests ensure off-by-one errors in version comparisons are caught.
 /// - Integrity tests guard against tampered or incomplete lockfile entries.
 
+// Include the contract source so this file is self-contained and compilable
+// without a Cargo project: `rustc --test npm_package_lock.test.rs`
+#[path = "npm_package_lock.rs"]
+mod npm_package_lock;
+
 #[cfg(test)]
 mod tests {
     use std::collections::HashMap;
 
     // Pull in the contract functions directly (same crate)
-    use crate::{
+    use npm_package_lock::{
         audit_all, audit_package, failing_results, is_version_gte, parse_semver,
         validate_integrity, validate_lockfile_version, PackageEntry,
     };

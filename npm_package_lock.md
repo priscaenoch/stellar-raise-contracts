@@ -99,6 +99,20 @@ assert!(failures.is_empty(), "Vulnerabilities found: {:?}", failures);
 
 ---
 
+## CI/CD Integration
+
+`npm audit --audit-level=moderate` is now enforced in the `frontend` job of
+`.github/workflows/rust_ci.yml`. The build fails if any moderate-or-higher
+vulnerability is detected in the NPM dependency tree, preventing vulnerable
+packages from reaching `main`.
+
+```yaml
+- name: Audit NPM dependencies
+  run: npm audit --audit-level=moderate
+```
+
+---
+
 ## Test Coverage
 
 The test suite in `npm_package_lock.test.rs` covers:
@@ -137,10 +151,9 @@ Total: **42 test cases** — exceeds the 95% coverage requirement.
 ## Commit Reference
 
 ```
-feat: implement add-test-for-npm-packagelockjson-minor-vulnerabilities-for-optimization with tests and docs
+feat: implement update-npm-packagelockjson-minor-vulnerabilities-for-cicd with tests and docs
 ```
 
-- Upgraded `svgo` from `3.3.2` to `3.3.3` (fixes GHSA-xpqw-6gx7-v673)
-- Added `npm_package_lock.rs` contract with NatSpec-style comments
-- Added `npm_package_lock.test.rs` with 42 test cases (≥95% coverage)
-- Added `npm_package_lock.md` documentation
+- Added `npm audit --audit-level=moderate` to CI frontend job (`.github/workflows/rust_ci.yml`)
+- Made `npm_package_lock.test.rs` self-contained via `#[path]` include (no Cargo project needed)
+- Updated `npm_package_lock.md` with CI/CD integration section
