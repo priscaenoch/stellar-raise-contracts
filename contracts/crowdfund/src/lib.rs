@@ -27,6 +27,7 @@ pub mod withdraw_event_emission;
 pub mod loop_optimization;
 pub mod security_compliance_automation;
 pub mod security_analytics;
+pub mod conditional_optimization;
 pub mod batch_processing_optimization;
 
 pub mod parallel
@@ -95,6 +96,8 @@ mod role_based_access_test;
 #[path = "security_analytics.test.rs"]
 mod security_analytics_test;
 #[cfg(test)]
+#[path = "conditional_optimization.test.rs"]
+mod conditional_optimization_test;
 #[path = "batch_processing_optimization.test.rs"]
 mod batch_processing_optimization_test;
 
