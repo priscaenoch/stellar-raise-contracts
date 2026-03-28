@@ -23,6 +23,8 @@ pub mod stellar_token_minter;
 pub mod stream_processing_optimization;
 pub mod withdraw_event_emission;
 pub mod security_compliance_automation;
+pub mod security_monitoring_dashboard;
+pub mod data_structure_optimization;
 
 // ── Imports from modules ──────────────────────────────────────────────────────
 
@@ -81,6 +83,12 @@ mod stream_processing_optimization_test;
 #[cfg(test)]
 #[path = "security_compliance_automation.test.rs"]
 mod security_compliance_automation_test;
+#[cfg(test)]
+#[path = "security_monitoring_dashboard.test.rs"]
+mod security_monitoring_dashboard_test;
+#[cfg(test)]
+#[path = "data_structure_optimization.test.rs"]
+mod data_structure_optimization_test;
 
 // --- Constants ---
 const CONTRACT_VERSION: u32 = 3;
@@ -188,6 +196,8 @@ pub enum DataKey {
     GovernanceAddress,
     /// Boolean flag — when true, contribute() and withdraw() are blocked.
     Paused,
+    /// Packed campaign metadata (goal, deadline, min_contribution, total_raised).
+    PackedMeta,
 }
 
 // ── Contract Error ──────────────────────────────────────────────────────────
