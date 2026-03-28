@@ -1,6 +1,11 @@
 #![no_std]
 
+pub mod output_sanitization;
 pub mod security_testing_automation;
+
+#[cfg(test)]
+#[path = "output_sanitization.test.rs"]
+mod output_sanitization_test;
 
 #[cfg(test)]
 #[path = "security_testing_automation.test.rs"]
