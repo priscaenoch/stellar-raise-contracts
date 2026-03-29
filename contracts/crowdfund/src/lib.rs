@@ -37,6 +37,8 @@ pub mod conditional_optimization;
 pub mod batch_processing_optimization;
 pub mod state_compression;
 pub mod optimistic_execution;
+pub mod security_incident_response;
+pub mod data_availability_layer;
 
 use crate::reentrancy_guard::{enter_transfer, exit_transfer, protected_transfer};
 
@@ -133,6 +135,12 @@ mod state_compression_test;
 #[cfg(test)]
 #[path = "withdraw_event_emission.test.rs"]
 mod withdraw_event_emission_test_new;
+#[cfg(test)]
+#[path = "security_incident_response.test.rs"]
+mod security_incident_response_test;
+#[cfg(test)]
+#[path = "data_availability_layer.test.rs"]
+mod data_availability_layer_test;
 
 // --- Constants ---
 const CONTRACT_VERSION: u32 = 3;
