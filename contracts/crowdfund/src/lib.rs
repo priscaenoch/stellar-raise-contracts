@@ -36,6 +36,7 @@ pub mod security_analytics;
 pub mod conditional_optimization;
 pub mod batch_processing_optimization;
 pub mod state_compression;
+pub mod computation_optimization;
 
 use crate::reentrancy_guard::{enter_transfer, exit_transfer, protected_transfer};
 
@@ -126,6 +127,9 @@ mod batch_processing_optimization_test;
 #[cfg(test)]
 #[path = "state_compression.test.rs"]
 mod state_compression_test;
+#[cfg(test)]
+#[path = "computation_optimization.test.rs"]
+mod computation_optimization_test;
 #[cfg(test)]
 #[path = "withdraw_event_emission.test.rs"]
 mod withdraw_event_emission_test_new;
