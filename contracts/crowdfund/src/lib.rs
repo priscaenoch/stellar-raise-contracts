@@ -20,6 +20,7 @@ pub mod contract_state_size;
 pub mod contribute_error_handling;
 pub mod crowdfund_initialize_function;
 pub mod role_based_access;
+pub mod state_migration;
 #[cfg(test)]
 pub mod npm_package_lock;
 pub mod proptest_generator_boundary;
@@ -141,6 +142,9 @@ mod optimistic_execution_test;
 #[cfg(test)]
 #[path = "state_compression.test.rs"]
 mod state_compression_test;
+#[cfg(test)]
+#[path = "state_migration.test.rs"]
+mod state_migration_test;
 #[cfg(test)]
 #[path = "computation_optimization.test.rs"]
 mod computation_optimization_test;
